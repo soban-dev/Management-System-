@@ -42,7 +42,9 @@ const NotificationComponent = () => {
 
       if (response.status === 200 && response.data.success) {
         alert(
-          `${actionType.charAt(0).toUpperCase() + actionType.slice(1)} action successful for ${username}.`
+          `${
+            actionType.charAt(0).toUpperCase() + actionType.slice(1)
+          } action successful for ${username}.`
         );
         fetchNotifications(); // Refresh notifications after successful action
       } else {
@@ -74,16 +76,9 @@ const NotificationComponent = () => {
   const fetchNotifications = async () => {
     setLoading(true);
     try {
-      const token = localStorage.getItem("token");
-      if (!token) {
-        alert("Authentication token not found. Please log in.");
-        setLoading(false);
-        return;
-      }
-
       const response = await fetch(`${BASE_URL}/admin/employees`, {
         headers: {
-          Authorization: `Bearer ${token}`, // Ensure token is stored and retrieved correctly
+          withCredentials: true,
         },
       });
 
@@ -107,7 +102,7 @@ const NotificationComponent = () => {
       console.error("Error fetching notifications:", error);
       alert("An error occurred while fetching notifications.");
     } finally {
-      setLoading(false); // Hide loader after data is fetched
+      setLoading(false);
     }
   };
 
@@ -225,7 +220,11 @@ const NotificationComponent = () => {
                     },
                   }}
                   onClick={() =>
-                    handleAction(notification.id, notification.username, "verify")
+                    handleAction(
+                      notification.id,
+                      notification.username,
+                      "verify"
+                    )
                   }
                   disabled={processingId === notification.id}
                 >
@@ -253,7 +252,11 @@ const NotificationComponent = () => {
                     },
                   }}
                   onClick={() =>
-                    handleAction(notification.id, notification.username, "delete")
+                    handleAction(
+                      notification.id,
+                      notification.username,
+                      "delete"
+                    )
                   }
                   disabled={processingId === notification.id}
                 >
@@ -281,7 +284,11 @@ const NotificationComponent = () => {
                     },
                   }}
                   onClick={() =>
-                    handleAction(notification.id, notification.username, "admin")
+                    handleAction(
+                      notification.id,
+                      notification.username,
+                      "admin"
+                    )
                   }
                   disabled={processingId === notification.id}
                 >
