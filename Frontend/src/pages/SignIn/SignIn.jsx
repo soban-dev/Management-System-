@@ -128,7 +128,7 @@ export default function SignIn() {
         });
 
         const result = await response.json();
-        console.log("Response from backend:", result);
+        // console.log("Response from backend:", result);
 
         if (result.success === true) {
             // Optionally, you can store role in localStorage

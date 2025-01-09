@@ -18,7 +18,7 @@ export default function Top2ndCards({ datevalue, datevalue2 }) {
   useEffect(() => {
     const fetchData = async () => {
         try {
-          console.log("Fetching data...");  
+          // console.log("Fetching data...");  
           const response = await axios.get(
             `${BASE_URL}/admin/stockinfos`
           );

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Box, TextField, Button, Typography, Divider } from "@mui/material";
 import axios from "axios";
+import { BASE_URL } from "../../config";
 
 const ChangePasswordSection = () => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -21,7 +22,7 @@ const ChangePasswordSection = () => {
     }
     try {
       const response = await axios.post(
-        `${BASE_URL}/changepassword`,
+        `${BASE_URL}/auth/changepassword`,
         {
           newpassword: newPassword,
         },
@@ -69,7 +70,7 @@ const ChangePasswordSection = () => {
           Change Password
         </Typography>
         <Typography sx={{ color: "white" }}>
-          {isExpanded ? "---" : "--->>"}
+          {isExpanded ? "---" : "***"}
         </Typography>
       </Box>
 
@@ -85,7 +86,7 @@ const ChangePasswordSection = () => {
             borderRadius: "5px",
           }}
         >
-          <TextField
+          {/* <TextField
             variant="outlined"
             type="password"
             label="Current Password"
@@ -104,7 +105,7 @@ const ChangePasswordSection = () => {
                 },
               },
             }}
-          />
+          /> */}
           <TextField
             variant="outlined"
             type="password"

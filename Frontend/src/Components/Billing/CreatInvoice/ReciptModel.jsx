@@ -33,7 +33,7 @@ const ReceiptModal = ({
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false); // New state for loading
   const token = localStorage.getItem("token");
-  console.log(token);
+  // console.log(token);
   const calculateTotalAmount = () => {
     return inventory.reduce((total, row) => total + row.totalAmount, 0);
   };

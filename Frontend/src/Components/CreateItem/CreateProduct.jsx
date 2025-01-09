@@ -57,7 +57,7 @@ const CreateProduct = () => {
           withCredentials: true,
         }
       );
-      console.log("Backend Response: ", response.data.message);
+      // console.log("Backend Response: ", response.data.message);
       setSuccessMessage(response.data.message);
       setErrorMessage("");
       setClientName("");

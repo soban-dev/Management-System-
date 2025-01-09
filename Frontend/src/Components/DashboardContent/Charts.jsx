@@ -52,7 +52,7 @@ export default function Charts() {
           const revenueData = array.map(item => item.perdayRevenue || 0);
           const itemsSoldData = array.map(item => item.perdaySaleAmount || 0);
         //  console.log(salesData);
-        console.log(salesData);
+        // console.log(salesData);
 
           setCardData({
             sales: salesData,

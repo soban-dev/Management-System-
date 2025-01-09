@@ -53,18 +53,25 @@ const ProfileComponent = () => {
   };
 
   const handleSaveClick = async () => {
+    const { name, phone, email, address } = profileData;
+    if (!name || !phone || !email || !address) {
+      alert("Please fill out all the fields before saving!");
+      return;
+    }
     try {
-      const response = await axios.put(
-        `${BASE_URL}/auth/profile-update`,
+      const response = await axios.post(
+        `${BASE_URL}/auth/update-profile`,
         profileData,
         {
           withCredentials: true,
         }
       );
-      console.log("Profile updated successfully:", response.data);
+      // console.log("Profile updated successfully:", response.data);
+      alert("Profile updated successfully!");
       setIsEditing(false);
     } catch (error) {
-      console.error("Error updating profile data:", error);
+      // console.error("Error updating profile data:", error);
+      alert("Error updating profile data");
     }
   };
 
