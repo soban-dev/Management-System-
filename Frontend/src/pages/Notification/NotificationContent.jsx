@@ -16,7 +16,7 @@ const NotificationComponent = () => {
   const [notifications, setNotifications] = useState([]);
   const [loading, setLoading] = useState(false); // State to manage loader visibility
   const [processingId, setProcessingId] = useState(null); // State to track which action is processing
-  const [userStatus, setUserStatus] = useState(true); // State to toggle user status
+  const [userStatus, setUserStatus] = useState(false); // State to toggle user status
   const location = useLocation();
 
   // Generic Handler for Verify, Delete, and Admin actions
@@ -135,9 +135,11 @@ const NotificationComponent = () => {
           sx={{ display: "flex", justifyContent: "space-between", gap: "10px" }}
         >
           <Box></Box>
+
           <Typography
             variant="h4"
             sx={{
+              marginLeft: "140px",
               color: "white",
               fontWeight: "bold",
               textAlign: "center",
@@ -145,7 +147,7 @@ const NotificationComponent = () => {
               textAlignLast: "center",
             }}
           >
-            Alerts
+            {userStatus ? "Verified Employee" : "Unverified Users"}
           </Typography>
           <Button
             variant="contained"
