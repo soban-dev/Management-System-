@@ -113,7 +113,7 @@ const LowStockProduct = (data) => {
         <Typography
           variant="h4"
           align="center"
-          color="#ffffff"
+          color="red"
           gutterBottom
           sx={{
             fontWeight: "bold",

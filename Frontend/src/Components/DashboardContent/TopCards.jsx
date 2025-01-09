@@ -88,10 +88,16 @@ export default function TopCards({ datevalue, datevalue2 }) {
                 <Typography variant="h6" sx={{ fontSize: "13px" }}>
                   {item.title}
                 </Typography>
-                <Typography variant="h4" sx={{ fontSize: "16px", fontWeight: "bold" }}>
+                <Typography
+                  variant="h4"
+                  sx={{ fontSize: "16px", fontWeight: "bold" }}
+                >
                   {item.value}
                 </Typography>
-                <Typography variant="body2" sx={{ fontSize: "11px", color: "#4CAF50" }}>
+                <Typography
+                  variant="body2"
+                  sx={{ fontSize: "11px", color: "#4CAF50" }}
+                >
                   {item.percent} {item.description}
                 </Typography>
               </Box>

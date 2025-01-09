@@ -1,5 +1,3 @@
-// components/NotificationComponent.js
-
 import React, { useEffect, useState } from "react";
 import {
   Box,
@@ -18,6 +16,7 @@ const NotificationComponent = () => {
   const [notifications, setNotifications] = useState([]);
   const [loading, setLoading] = useState(false); // State to manage loader visibility
   const [processingId, setProcessingId] = useState(null); // State to track which action is processing
+  const [userStatus, setUserStatus] = useState(true); // State to toggle user status
   const location = useLocation();
 
   // Generic Handler for Verify, Delete, and Admin actions
@@ -65,22 +64,27 @@ const NotificationComponent = () => {
     );
   };
 
-  // Fetch notifications when the component mounts or when the route changes
-  useEffect(() => {
-    if (location.pathname === "/notifications") {
-      fetchNotifications();
-    }
-  }, [location]);
+  const toggleUserStatus = async () => {
+    setUserStatus((prevStatus) => !prevStatus); // Toggle status
+    // fetchNotifications(); // Fetch notifications after toggling status
+  };
 
-  // Function to fetch notifications from the backend
+  useEffect(() => {
+    // Fetch notifications after userStatus changes
+    fetchNotifications();
+  }, [userStatus]); // Trigger fetch when userStatus changes
+
   const fetchNotifications = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`${BASE_URL}/admin/employees`, {
-        headers: {
-          withCredentials: true,
-        },
-      });
+      const response = await fetch(
+        `${BASE_URL}/admin/employees?verified=${userStatus}`,
+        {
+          headers: {
+            withCredentials: true,
+          },
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Failed to fetch notifications");
@@ -110,7 +114,7 @@ const NotificationComponent = () => {
     <Box
       sx={{
         width: "100%",
-        maxWidth: 1000, // Increased maxWidth for horizontal enlargement
+        maxWidth: 1000,
         margin: "20px auto",
         padding: "0 20px",
       }}
@@ -127,17 +131,40 @@ const NotificationComponent = () => {
           boxShadow: "0 10px 30px rgba(0,0,0,0.5)",
         }}
       >
-        <Typography
-          variant="h4"
-          sx={{
-            color: "white",
-            fontWeight: "bold",
-            textAlign: "center",
-            fontFamily: "'Roboto', sans-serif",
-          }}
+        <Box
+          sx={{ display: "flex", justifyContent: "space-between", gap: "10px" }}
         >
-          Alerts
-        </Typography>
+          <Box></Box>
+          <Typography
+            variant="h4"
+            sx={{
+              color: "white",
+              fontWeight: "bold",
+              textAlign: "center",
+              fontFamily: "'Roboto', sans-serif",
+              textAlignLast: "center",
+            }}
+          >
+            Alerts
+          </Typography>
+          <Button
+            variant="contained"
+            sx={{
+              backgroundColor: "#1E90FF",
+              color: "white",
+              fontWeight: "bold",
+              padding: "6px 16px",
+              borderRadius: "8px",
+              textTransform: "none",
+              "&:hover": {
+                backgroundColor: "#1E60FF",
+              },
+            }}
+            onClick={toggleUserStatus}
+          >
+            {userStatus === false ? "Verified Users" : "Unverified Users"}
+          </Button>
+        </Box>
 
         <Typography
           variant="body1"
@@ -204,36 +231,38 @@ const NotificationComponent = () => {
                 }}
               >
                 {/* Verify Button */}
-                <Button
-                  variant="contained"
-                  sx={{
-                    backgroundColor:
-                      processingId === notification.id ? "#ccc" : "#4CAF50",
-                    color: "white",
-                    fontWeight: "bold",
-                    padding: "6px 16px",
-                    borderRadius: "8px",
-                    textTransform: "none",
-                    "&:hover": {
+                {userStatus === false && (
+                  <Button
+                    variant="contained"
+                    sx={{
                       backgroundColor:
-                        processingId === notification.id ? "#ccc" : "#45a049",
-                    },
-                  }}
-                  onClick={() =>
-                    handleAction(
-                      notification.id,
-                      notification.username,
-                      "verify"
-                    )
-                  }
-                  disabled={processingId === notification.id}
-                >
-                  {processingId === notification.id ? (
-                    <CircularProgress size={20} sx={{ color: "white" }} />
-                  ) : (
-                    "Verify"
-                  )}
-                </Button>
+                        processingId === notification.id ? "#ccc" : "#4CAF50",
+                      color: "white",
+                      fontWeight: "bold",
+                      padding: "6px 16px",
+                      borderRadius: "8px",
+                      textTransform: "none",
+                      "&:hover": {
+                        backgroundColor:
+                          processingId === notification.id ? "#ccc" : "#45a049",
+                      },
+                    }}
+                    onClick={() =>
+                      handleAction(
+                        notification.id,
+                        notification.username,
+                        "verify"
+                      )
+                    }
+                    disabled={processingId === notification.id}
+                  >
+                    {processingId === notification.id ? (
+                      <CircularProgress size={20} sx={{ color: "white" }} />
+                    ) : (
+                      "Verify"
+                    )}
+                  </Button>
+                )}
 
                 {/* Delete Button */}
                 <Button
@@ -280,7 +309,7 @@ const NotificationComponent = () => {
                     textTransform: "none",
                     "&:hover": {
                       backgroundColor:
-                        processingId === notification.id ? "#ccc" : "#FB8C00",
+                        processingId === notification.id ? "#ccc" : "#f57c00",
                     },
                   }}
                   onClick={() =>
@@ -299,26 +328,32 @@ const NotificationComponent = () => {
                   )}
                 </Button>
 
-                {/* Dismiss (Close) Icon */}
+                {/* Dismiss Icon */}
                 <IconButton
-                  size="small"
-                  aria-label="dismiss notification"
+                  color="primary"
                   onClick={() => handleDismiss(notification.id)}
                   sx={{
-                    color: "white",
+                    backgroundColor: "#ff1100a8",
+                    "&:hover": {
+                      backgroundColor: "#ff4500",
+                    },
                   }}
                 >
-                  <CloseIcon fontSize="small" />
+                  <CloseIcon />
                 </IconButton>
               </Box>
             </Box>
           ))
         ) : (
           <Typography
-            variant="body1"
-            sx={{ color: "#A0AEC0", textAlign: "center" }}
+            sx={{
+              textAlign: "center",
+              color: "white",
+              fontSize: "16px",
+              fontWeight: "bold",
+            }}
           >
-            No notifications available.
+            No notifications available
           </Typography>
         )}
       </Paper>

@@ -148,6 +148,17 @@ function Invoices() {
         >
           <CircularProgress sx={{ color: "#1E90FF" }} />
         </Box>
+      ) : invoices.length === 0 ? (
+        <Typography
+          sx={{
+            color: "gray",
+            textAlign: "center",
+            marginTop: "20px",
+            fontSize: { xs: "1rem", sm: "1.2rem" },
+          }}
+        >
+          No invoices available
+        </Typography>
       ) : (
         <List
           sx={{

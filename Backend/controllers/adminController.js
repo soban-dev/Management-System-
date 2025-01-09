@@ -177,10 +177,19 @@ exports.readAllEmmployees = async (req, res) => {
 
 exports.unverifiedemployees = async (req, res) => {
   try {
-    const unverified = await Employee.find({ verified: false });
+    const { verified } = req.query;
+
+    // Ensure 'verified' is a boolean
+    const isVerified = verified === "true";
+    const query = isVerified
+      ? { verified: true, role: "employee" }
+      : { verified: false };
+    console.log(query);
+    const unverified = await Employee.find(query);
     res.status(200).json({ unverified });
   } catch (error) {
-    res.status(400).json({ message: error });
+    console.error("Error fetching employees:", error);
+    res.status(400).json({ message: error.message });
   }
 };
 

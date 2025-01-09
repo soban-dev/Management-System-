@@ -59,7 +59,6 @@ const HighStockProduct = (data) => {
     }
   }, [data]);
 
-
   const rows = [];
   if (cardData.result.length > 0) {
     for (const item of cardData.result) {
@@ -95,7 +94,7 @@ const HighStockProduct = (data) => {
         <Typography
           variant="h4"
           align="center"
-          color="#ffffff"
+          color="green"
           gutterBottom
           sx={{
             fontWeight: "bold",
@@ -125,17 +124,29 @@ const HighStockProduct = (data) => {
               <TableHead>
                 <StyledTableHead>
                   <TableCell
-                    sx={{ color: "#ffffff", fontWeight: "bold", fontSize: "16px" }}
+                    sx={{
+                      color: "#ffffff",
+                      fontWeight: "bold",
+                      fontSize: "16px",
+                    }}
                   >
                     Product
                   </TableCell>
                   <TableCell
-                    sx={{ color: "#ffffff", fontWeight: "bold", fontSize: "16px" }}
+                    sx={{
+                      color: "#ffffff",
+                      fontWeight: "bold",
+                      fontSize: "16px",
+                    }}
                   >
                     Available Quantity
                   </TableCell>
                   <TableCell
-                    sx={{ color: "#ffffff", fontWeight: "bold", fontSize: "16px" }}
+                    sx={{
+                      color: "#ffffff",
+                      fontWeight: "bold",
+                      fontSize: "16px",
+                    }}
                   >
                     Required Quantity
                   </TableCell>

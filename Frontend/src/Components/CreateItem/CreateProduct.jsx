@@ -48,10 +48,10 @@ const CreateProduct = () => {
         `${BASE_URL}/inventory/createitem`,
         {
           name: newProduct.name,
-          quantity: newProduct.quantity,
-          required_quantity: newProduct.required_quantity,
-          buying_price_per_unit: newProduct.buying_price_per_unit,
-          selling_price_per_unit: newProduct.selling_price_per_unit,
+          quantity: Number(newProduct.quantity),
+          required_quantity: Number(newProduct.required_quantity),
+          buying_price_per_unit: Number(newProduct.buying_price_per_unit),
+          selling_price_per_unit: Number(newProduct.selling_price_per_unit),
         },
         {
           withCredentials: true,

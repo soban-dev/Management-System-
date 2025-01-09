@@ -4,6 +4,7 @@ const { createSchema } = require("../middlewares/validator.js");
 
 exports.createItem = async (req, res) => {
   const userId = req.user.userId;
+  console.log(req.body);
   try {
     const {
       name,
@@ -17,8 +18,14 @@ exports.createItem = async (req, res) => {
     if (existingItem) {
       return res.status(400).json({ message: "Item already exists" });
     }
-    console.log(buying_price_per_unit, selling_price_per_unit);
-    if (selling_price_per_unit <= buying_price_per_unit) {
+
+    // Use a small tolerance for comparison to handle floating-point precision
+    const TOLERANCE = 0.0001;
+    if (
+      selling_price_per_unit < buying_price_per_unit &&
+      Math.abs(selling_price_per_unit - buying_price_per_unit) > TOLERANCE
+    ) {
+      console.log(selling_price_per_unit, buying_price_per_unit);
       return res
         .status(400)
         .json({ message: "Selling price must be greater than buying price." });
@@ -39,6 +46,7 @@ exports.createItem = async (req, res) => {
     if (quantity == 0) {
       stock = "empty";
     } else if (quantity < required_quantity) {
+      console.log("Low stock");
       stock = "Low";
     }
     const item = new Item({
@@ -63,7 +71,7 @@ exports.createItem = async (req, res) => {
     });
 
     return res.status(200).json({
-      sucess: true,
+      success: true,
       message: "Item saves successful ",
       result: result,
     });
