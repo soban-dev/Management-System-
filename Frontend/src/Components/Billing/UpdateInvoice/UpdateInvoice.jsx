@@ -409,7 +409,9 @@ const CreateInvoice = ({ onClose }) => {
           <TextField
             value={quantity}
             onChange={(e) => setQuantity(e.target.value)}
-            onKeyPress={handleKeyPress}
+            onKeyPress={
+              itemData && itemData.quantity > 0 ? handleKeyPress : undefined
+            }
             placeholder="Enter Quantity"
             sx={{
               width: "100%",

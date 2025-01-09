@@ -23,9 +23,7 @@ const ChangePasswordSection = () => {
       const response = await axios.post(
         `${BASE_URL}/changepassword`,
         {
-          currentPassword,
-          newPassword,
-          confirmNewPassword,
+          newpassword: newPassword,
         },
         {
           withCredentials: true,
