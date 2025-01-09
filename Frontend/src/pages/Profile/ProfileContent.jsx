@@ -55,7 +55,7 @@ const ProfileComponent = () => {
   const handleSaveClick = async () => {
     try {
       const response = await axios.put(
-        `${BASE_URL}/profile/update`,
+        `${BASE_URL}/auth/profile-update`,
         profileData,
         {
           withCredentials: true,
